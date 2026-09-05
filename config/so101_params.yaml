@@ -1,0 +1,137 @@
+# SO-101 Robot Configuration
+# ==========================
+# This file contains the kinematic parameters for the SO-101 robot arm.
+# These values are extracted from the official URDF.
+
+robot:
+  name: SO-101
+  manufacturer: TheRobotStudio
+  type: 5DoF + Gripper
+  
+# Kinematic chain parameters (in meters)
+kinematics:
+  # Base to Joint 1 frame
+  base_to_j1:
+    x: 0.0388353
+    y: 0.0
+    z: 0.0624
+  
+  # Joint 1 (shoulder_pan) offset  
+  j1_offset:
+    z: -0.0303992
+  
+  # Joint 1 to Joint 2 (shoulder_lift)
+  j1_to_j2:
+    z: -0.0542
+  
+  # Joint 2 to Joint 3 (elbow_flex)
+  j2_to_j3:
+    z: 0.11257
+  
+  # Joint 3 offset
+  j3_offset:
+    z: 0.028
+  
+  # Joint 3 to Joint 4 (wrist_flex)
+  j3_to_j4:
+    x: 0.1349
+  
+  # Joint 4 to Joint 5 (wrist_roll)
+  j4_to_j5:
+    x: 0.0611
+  
+  # Joint 5 to Tool frame
+  j5_to_tool:
+    x: 0.1034
+
+# Joint definitions
+joints:
+  shoulder_pan:
+    type: revolute
+    axis: [0, 0, 1]  # Z-axis
+    limits:
+      lower_deg: -180
+      upper_deg: 180
+    
+  shoulder_lift:
+    type: revolute
+    axis: [0, 1, 0]  # Y-axis
+    limits:
+      lower_deg: -90
+      upper_deg: 90
+    
+  elbow_flex:
+    type: revolute
+    axis: [0, 1, 0]  # Y-axis
+    limits:
+      lower_deg: -135
+      upper_deg: 135
+    
+  wrist_flex:
+    type: revolute
+    axis: [0, 1, 0]  # Y-axis
+    limits:
+      lower_deg: -90
+      upper_deg: 90
+    
+  wrist_roll:
+    type: revolute
+    axis: [1, 0, 0]  # X-axis
+    limits:
+      lower_deg: -180
+      upper_deg: 180
+    
+  gripper:
+    type: prismatic
+    axis: [0, 1, 0]  # Y-axis (jaw movement)
+    limits:
+      lower_m: 0.0
+      upper_m: 0.034
+
+# DH Parameters (if needed for alternative FK formulation)
+# Note: Our implementation uses product of exponentials instead
+dh_parameters:
+  # Format: [theta_offset, d, a, alpha] in radians/meters
+  # This is for reference only - our FK uses explicit transforms
+  joint1: [0, 0.0624, 0.0388353, 3.14159]
+  joint2: [0, -0.0846, 0, -1.5708]
+  joint3: [0, 0.14057, 0, 0]
+  joint4: [0, 0, 0.1349, 0]
+  joint5: [0, 0, 0.0611, -1.5708]
+  tool: [0, 0, 0.1034, 0]
+
+# Workspace (approximate)
+workspace:
+  # Maximum reach from base
+  max_reach_m: 0.45
+  # Minimum reach (inside "hole")
+  min_reach_m: 0.10
+  # Vertical range above base
+  z_max_m: 0.40
+  z_min_m: -0.10
+
+# Default configurations
+default_positions:
+  home:
+    shoulder_pan: 0
+    shoulder_lift: 0
+    elbow_flex: 0
+    wrist_flex: 0
+    wrist_roll: 0
+    gripper: 50
+    
+  ready:
+    shoulder_pan: 0
+    shoulder_lift: 45
+    elbow_flex: -45
+    wrist_flex: 90
+    wrist_roll: 0
+    gripper: 50
+    
+  pick_approach:
+    shoulder_pan: -45
+    shoulder_lift: 45
+    elbow_flex: -45
+    wrist_flex: 90
+    wrist_roll: 0
+    gripper: 50

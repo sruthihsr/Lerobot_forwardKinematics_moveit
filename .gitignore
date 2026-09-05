@@ -1,0 +1,87 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg
+MANIFEST
+
+# Virtual Environments
+venv/
+env/
+ENV/
+venv.bak/
+
+# Conda
+.conda/
+
+# ROS2 Build Artifacts
+ros2_ws/build/
+ros2_ws/install/
+ros2_ws/log/
+build/
+install/
+log/
+*.bag
+*.db3
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# MuJoCo
+*.mjb
+mujoco_logs/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# Data files (optional - uncomment if you want to exclude data)
+# *.csv
+# *.h5
+# *.pkl
+# *.npy
+
+# Logs
+*.log
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Model checkpoints
+checkpoints/
+*.pth
+*.pt
+*.ckpt
+
+# Documentation build
+docs/_build/
+
+# Test coverage
+htmlcov/
+.coverage
+.coverage.*
+.pytest_cache/

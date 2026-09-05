@@ -1,0 +1,25 @@
+# SO-101 Robotics Course Requirements
+# Install with: pip install -r requirements.txt
+
+# Core dependencies
+numpy>=1.24.0
+scipy>=1.10.0
+matplotlib>=3.7.0
+
+# MuJoCo simulation
+mujoco>=3.0.0
+
+# Visualization
+opencv-python>=4.8.0
+
+# Utilities
+pyyaml>=6.0
+tqdm>=4.65.0
+imageio>=2.31.0
+
+# Optional: LeRobot (for Lab 2.2)
+# pip install lerobot[kinematics]
+
+# Optional: ROS2 dependencies (install via apt/rosdep)
+# For Ubuntu 22.04: ros-humble-desktop
+# For Ubuntu 24.04: ros-jazzy-desktop

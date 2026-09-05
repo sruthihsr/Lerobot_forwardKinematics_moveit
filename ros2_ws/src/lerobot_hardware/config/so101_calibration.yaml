@@ -1,0 +1,12 @@
+# Per-servo raw tick reading captured with the physical arm posed at the
+# URDF/SRDF "home" pose (all joints = 0 rad). Used as each joint's
+# zero-reference instead of the servo's live EEPROM min/max midpoint, which
+# does not generally line up with the URDF's own zero (see feetech_bus.py
+# raw_to_rad/rad_to_raw).
+home_raw:
+  1: 2048
+  2: 2381
+  3: 2523
+  4: 2999
+  5: 4031
+  6: 1533
