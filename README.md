@@ -53,8 +53,8 @@ Package-level docs:
 
 ### Step 1: Clone the Repository
 ```bash
-git clone https://github.com/sruthihsr/Lerobot_forwardKinematics_moveit.git
-cd Lerobot_forwardKinematics_moveit
+git clone https://github.com/sruthihsr/LerobotFwd_InvKinematics.git
+cd LerobotFwd_InvKinematics
 ```
 
 ### Step 2: Run the Setup Script

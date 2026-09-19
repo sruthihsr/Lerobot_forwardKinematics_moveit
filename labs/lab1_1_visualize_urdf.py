@@ -59,8 +59,8 @@ Option 1: Install and use ROS2 (Full Experience)
      https://docs.ros.org/en/jazzy/Installation.html
 
 2. Clone this workspace:
-   git clone https://github.com/sruthihsr/Lerobot_forwardKinematics_moveit.git
-   cd Lerobot_forwardKinematics_moveit
+   git clone https://github.com/sruthihsr/LerobotFwd_InvKinematics.git
+   cd LerobotFwd_InvKinematics
 
 3. Build the workspace:
    cd ..
