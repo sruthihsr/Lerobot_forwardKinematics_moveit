@@ -130,6 +130,14 @@ class FeetechBus:
             self.limits[servo_id] = (min_raw, max_raw)
             self._log(f"servo {servo_id}: live limits raw=[{min_raw}, {max_raw}]")
 
+        # Enabling torque drives each servo toward whatever its Goal_Position register holds
+        # (0 after power-up, or the last pose of a previous session) -- NOT toward where the arm
+        # is now. Point every goal at the present position first so torque-on just holds the pose.
+        for servo_id in self.servo_ids:
+            present = self._read(servo_id, ADDR_PRESENT_POSITION)
+            self._write(servo_id, ADDR_GOAL_POSITION, present)
+            self._log(f"servo {servo_id}: Goal_Position set to present position (raw={present}) before torque-on")
+
         for servo_id in self.servo_ids:
             self._write(servo_id, ADDR_ACCELERATION, self.acceleration)
             self._write(servo_id, ADDR_GOAL_VELOCITY, self.goal_velocity)
