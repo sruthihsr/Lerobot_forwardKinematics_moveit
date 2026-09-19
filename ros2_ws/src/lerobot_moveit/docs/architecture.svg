@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="lerobot_moveit turns URDF, SRDF and four YAML files into one move_group; clients plan through it, and it reaches mock hardware, Gazebo or the real arm through the same FollowJointTrajectory interface." font-family="Helvetica, Arial, sans-serif">
+<title>lerobot_moveit architecture</title>
+<desc>Configuration files feed move_group through MoveItConfigsBuilder. RViz, pose_loop.py and lerobot_ik_demo are clients of move_group. move_group executes through FollowJointTrajectory on a backend chosen by launch arguments: mock hardware, Gazebo or the real Feetech bridge, and joint states return from the backend.</desc>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4b5563"/></marker><marker id="arrA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c2410c"/></marker></defs>
+<rect width="1200" height="750" fill="#ffffff"/>
+<text x="30" y="30" font-size="17" font-weight="700" fill="#111827" text-anchor="start">lerobot_moveit: files in, planning services out, one FollowJointTrajectory interface to any arm</text>
+<rect x="30" y="46" width="1140" height="38" rx="7" fill="#f3f4f6" stroke="#4b5563" stroke-width="1.3"/>
+<text x="44" y="70" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">so101_moveit.launch.py</text>
+<text x="232" y="70" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">is_sim · use_real_hardware · dry_run · hardware_port   →   always starts move_group + RViz; the arguments pick the backend</text>
+<rect x="30" y="110" width="290" height="610" rx="10" fill="none" stroke="#9ca3af" stroke-width="1.3" stroke-dasharray="6 5"/>
+<text x="42" y="130" font-size="12.5" font-weight="700" fill="#4b5563" text-anchor="start">inputs  (config/ + lerobot_description)</text>
+<rect x="45" y="135" width="260" height="80" rx="7" fill="#f3f4f6" stroke="#4b5563" stroke-width="1.3"/>
+<text x="57" y="157" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">so101.urdf.xacro</text>
+<text x="57" y="177" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">from lerobot_description; xacro at launch</text>
+<text x="57" y="194" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">→ /tmp/so101_moveit.urdf</text>
+<rect x="45" y="235" width="260" height="105" rx="7" fill="#f3f4f6" stroke="#4b5563" stroke-width="1.3"/>
+<text x="57" y="257" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">config/so101.srdf</text>
+<text x="57" y="277" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">groups: arm (joints 1–5), gripper (6)</text>
+<text x="57" y="294" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">named poses: home, pose_1–4, vertical …</text>
+<text x="57" y="311" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">disabled collision pairs</text>
+<rect x="45" y="360" width="260" height="80" rx="7" fill="#f3f4f6" stroke="#4b5563" stroke-width="1.3"/>
+<text x="57" y="382" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">config/kinematics.yaml</text>
+<text x="57" y="402" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">arm: KDL, 5 ms timeout, 6D IK</text>
+<rect x="45" y="460" width="260" height="80" rx="7" fill="#f3f4f6" stroke="#4b5563" stroke-width="1.3"/>
+<text x="57" y="482" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">config/joint_limits.yaml</text>
+<text x="57" y="502" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">10 rad/s, 5 rad/s²; default scaling 0.1</text>
+<rect x="45" y="560" width="260" height="80" rx="7" fill="#f3f4f6" stroke="#4b5563" stroke-width="1.3"/>
+<text x="57" y="582" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">config/moveit_controllers.yaml</text>
+<text x="57" y="602" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">arm_controller · gripper_controller</text>
+<text x="45" y="672" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="start">pilz_cartesian_limits.yaml — read automatically</text>
+<text x="45" y="688" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="start">initial_positions.yaml — not read by anything</text>
+<polyline points="320,500 380,500" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="350" y="492" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="middle">params</text>
+<rect x="380" y="110" width="790" height="110" rx="10" fill="none" stroke="#9ca3af" stroke-width="1.3" stroke-dasharray="6 5"/>
+<text x="392" y="130" font-size="12.5" font-weight="700" fill="#4b5563" text-anchor="start">clients</text>
+<rect x="395" y="135" width="240" height="70" rx="7" fill="#f3f4f6" stroke="#4b5563" stroke-width="1.3"/>
+<text x="407" y="157" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">RViz MotionPlanning</text>
+<text x="407" y="177" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">interactive markers → Plan / Execute</text>
+<rect x="650" y="135" width="240" height="70" rx="7" fill="#f3f4f6" stroke="#4b5563" stroke-width="1.3"/>
+<text x="662" y="157" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">scripts/pose_loop.py</text>
+<text x="662" y="177" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">cycles the named poses</text>
+<rect x="905" y="135" width="250" height="70" rx="7" fill="#f3f4f6" stroke="#4b5563" stroke-width="1.3"/>
+<text x="917" y="157" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">lerobot_ik_demo</text>
+<text x="917" y="177" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">IK loop · click-to-move</text>
+<polyline points="470,205 470,270" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="478" y="246" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="start">plan + execute</text>
+<polyline points="620,205 620,270" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="628" y="246" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="start">/move_action</text>
+<polyline points="1030,205 1030,240 740,240 740,270" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="885" y="234" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="middle">check_state_validity · execute_trajectory · apply_planning_scene</text>
+<rect x="380" y="270" width="400" height="450" rx="10" fill="none" stroke="#9ca3af" stroke-width="1.3" stroke-dasharray="6 5"/>
+<text x="392" y="290" font-size="12.5" font-weight="700" fill="#4b5563" text-anchor="start">move_group</text>
+<rect x="395" y="295" width="370" height="95" rx="7" fill="#f3f4f6" stroke="#4b5563" stroke-width="1.3"/>
+<text x="407" y="317" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">planning scene monitor</text>
+<text x="407" y="337" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">robot state ← /joint_states (+ URDF/SRDF)</text>
+<text x="407" y="354" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">world ← collision objects, ApplyPlanningScene</text>
+<text x="407" y="371" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">publishes /monitored_planning_scene</text>
+<rect x="395" y="405" width="370" height="110" rx="7" fill="#f3f4f6" stroke="#4b5563" stroke-width="1.3"/>
+<text x="407" y="427" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">planning pipelines</text>
+<text x="407" y="447" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">OMPL (default) · CHOMP · Pilz · STOMP</text>
+<text x="407" y="464" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">request adapters: workspace + start-state</text>
+<text x="407" y="481" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">bounds, start-state collision</text>
+<text x="407" y="498" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">response: time-optimal parameterisation</text>
+<rect x="395" y="530" width="370" height="75" rx="7" fill="#f3f4f6" stroke="#4b5563" stroke-width="1.3"/>
+<text x="407" y="552" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">kinematics + query services</text>
+<text x="407" y="572" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">KDL → /compute_ik · /compute_fk</text>
+<text x="407" y="589" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">/compute_cartesian_path · /check_state_validity</text>
+<rect x="395" y="620" width="370" height="85" rx="7" fill="#f3f4f6" stroke="#4b5563" stroke-width="1.3"/>
+<text x="407" y="642" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">trajectory execution</text>
+<text x="407" y="662" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">moveit_simple_controller_manager → one</text>
+<text x="407" y="679" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">FollowJointTrajectory action per group</text>
+<text x="407" y="696" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">start-state tolerance 0.01 rad (default)</text>
+<rect x="850" y="270" width="320" height="450" rx="10" fill="none" stroke="#9ca3af" stroke-width="1.3" stroke-dasharray="6 5"/>
+<text x="862" y="290" font-size="12.5" font-weight="700" fill="#4b5563" text-anchor="start">execution backend — chosen by launch args</text>
+<rect x="865" y="295" width="290" height="95" rx="7" fill="#f3f4f6" stroke="#4b5563" stroke-width="1.3"/>
+<text x="877" y="317" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">mock hardware  (default)</text>
+<text x="877" y="337" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">ros2_control mock_components</text>
+<text x="877" y="354" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">lerobot_controller, 10 Hz update</text>
+<rect x="865" y="405" width="290" height="95" rx="7" fill="#f3f4f6" stroke="#4b5563" stroke-width="1.3"/>
+<text x="877" y="427" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">Gazebo  (is_sim:=True)</text>
+<text x="877" y="447" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">gz_ros2_control provides the same</text>
+<text x="877" y="464" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">controllers; use_sim_time on</text>
+<rect x="865" y="515" width="290" height="100" rx="7" fill="#fff7ed" stroke="#c2410c" stroke-width="2.2"/>
+<text x="877" y="537" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">real arm  (use_real_hardware:=True)</text>
+<text x="877" y="557" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">lerobot_hardware bridge → Feetech servos</text>
+<text x="877" y="574" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">dry_run:=True unless set False</text>
+<rect x="865" y="630" width="290" height="75" rx="7" fill="#f3f4f6" stroke="#4b5563" stroke-width="1.3"/>
+<text x="877" y="652" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">same interface for all three</text>
+<text x="877" y="672" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">/arm_controller/follow_joint_trajectory</text>
+<text x="877" y="689" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">/gripper_controller/… · /joint_states</text>
+<polyline points="765,662 865,662" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="815" y="640" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="middle">FollowJoint-</text>
+<text x="815" y="654" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="middle">Trajectory</text>
+<polyline points="865,345 765,345" fill="none" stroke="#4b5563" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arr)"/>
+<text x="815" y="322" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="middle">/joint_states</text>
+<text x="815" y="336" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="middle">(any backend)</text>
+</svg>
