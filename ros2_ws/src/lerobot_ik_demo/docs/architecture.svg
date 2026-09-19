@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 770" width="1200" height="770" role="img" aria-label="One planner talks only to move_group; mock hardware and the real Feetech bridge are interchangeable behind it, and the real arm returns its measured, sagging joint state to the planner every hop." font-family="Helvetica, Arial, sans-serif">
+<title>lerobot_ik_demo architecture</title>
+<desc>The loop plans in lerobot_ik_demo, validates against the padded cylinder in move_group, and executes through mock hardware or the real Feetech bridge. Joint states come back from either backend and every hop re-plans from the measured state.</desc>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4b5563"/></marker><marker id="arrA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c2410c"/></marker></defs>
+<rect width="1200" height="770" fill="#ffffff"/>
+<text x="30" y="30" font-size="17" font-weight="700" fill="#111827" text-anchor="start">One planner, two interchangeable arms — and the real one sags back into the plan</text>
+<rect x="30" y="46" width="1140" height="38" rx="7" fill="#f3f4f6" stroke="#4b5563" stroke-width="1.3"/>
+<text x="44" y="70" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">./run.sh</text>
+<text x="112" y="70" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">→ ros2 launch cylinder_loop.launch.py   builds · refuses a second stack · starts MoveIt + the backend first, the loop 10 s later</text>
+<polyline points="210,84 210,120" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="218" y="106" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="start">loop, +10 s</text>
+<polyline points="630,84 630,120" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="638" y="106" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="start">starts first</text>
+<polyline points="1020,84 1020,120" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="1028" y="106" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="start">mock | real</text>
+<rect x="30" y="120" width="360" height="545" rx="10" fill="none" stroke="#9ca3af" stroke-width="1.3" stroke-dasharray="6 5"/>
+<text x="42" y="140" font-size="12.5" font-weight="700" fill="#4b5563" text-anchor="start">lerobot_ik_demo  (this package)</text>
+<rect x="45" y="145" width="330" height="68" rx="7" fill="#f3f4f6" stroke="#4b5563" stroke-width="1.3"/>
+<text x="57" y="167" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">config/loop_points.yaml</text>
+<text x="57" y="187" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">left_side · top · right_side</text>
+<text x="57" y="204" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">offsets from the cylinder centre (--x --y)</text>
+<rect x="45" y="255" width="330" height="100" rx="7" fill="#f3f4f6" stroke="#4b5563" stroke-width="1.3"/>
+<text x="57" y="277" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">ik_loop.py</text>
+<text x="57" y="297" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">1  pre-flight the whole loop, no motion</text>
+<text x="57" y="314" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">2  per hop: plan → execute → wait to settle</text>
+<text x="57" y="331" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">3  first refusal or failure stops the loop</text>
+<rect x="45" y="400" width="330" height="130" rx="7" fill="#f3f4f6" stroke="#4b5563" stroke-width="1.3"/>
+<text x="57" y="422" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">arm_client.plan_to</text>
+<text x="57" y="442" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">line to the target clips the cylinder?</text>
+<text x="57" y="459" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">yes → lift · cross at 0.28 m · descend</text>
+<text x="57" y="476" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">no  → straight line</text>
+<text x="57" y="493" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">every 1 cm point checked, elbow flips rejected</text>
+<rect x="45" y="575" width="330" height="75" rx="7" fill="#f3f4f6" stroke="#4b5563" stroke-width="1.3"/>
+<text x="57" y="597" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">so101_kin.py</text>
+<text x="57" y="617" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">closed-form IK: pan → 2-link → tool pitch</text>
+<text x="57" y="634" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">joint origins and limits read from the URDF</text>
+<polyline points="210,213 210,255" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="218" y="238" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="start">points</text>
+<polyline points="210,355 210,400" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="218" y="382" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="start">target xyz</text>
+<polyline points="140,530 140,575" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="148" y="557" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="start">IK per point</text>
+<polyline points="290,575 290,530" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="298" y="557" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="start">joints</text>
+<rect x="500" y="120" width="260" height="440" rx="10" fill="none" stroke="#9ca3af" stroke-width="1.3" stroke-dasharray="6 5"/>
+<text x="512" y="140" font-size="12.5" font-weight="700" fill="#4b5563" text-anchor="start">move_group  (lerobot_moveit)</text>
+<rect x="515" y="145" width="230" height="60" rx="7" fill="#f3f4f6" stroke="#4b5563" stroke-width="1.3"/>
+<text x="527" y="167" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">RViz</text>
+<text x="527" y="187" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">robot + green cylinder</text>
+<rect x="515" y="255" width="230" height="100" rx="7" fill="#f3f4f6" stroke="#4b5563" stroke-width="1.3"/>
+<text x="527" y="277" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">planning scene</text>
+<text x="527" y="297" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">padded cylinder</text>
+<text x="527" y="314" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">r 0.10 m · h 0.21 m</text>
+<text x="527" y="331" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">(real 0.07 · 0.18, +3 cm pad)</text>
+<rect x="515" y="400" width="230" height="55" rx="7" fill="#f3f4f6" stroke="#4b5563" stroke-width="1.3"/>
+<text x="527" y="422" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">/check_state_validity</text>
+<text x="527" y="442" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">cylinder + self-collision</text>
+<rect x="515" y="480" width="230" height="60" rx="7" fill="#f3f4f6" stroke="#4b5563" stroke-width="1.3"/>
+<text x="527" y="502" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">/execute_trajectory</text>
+<text x="527" y="522" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">rejects if the arm drifted &gt; 0.01 rad</text>
+<polyline points="630,255 630,205" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="638" y="235" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="start">scene topic</text>
+<polyline points="375,305 515,305" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="445" y="296" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="middle">add cylinder</text>
+<polyline points="375,420 515,420" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="445" y="412" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="middle">validate each point</text>
+<polyline points="515,438 375,438" fill="none" stroke="#4b5563" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arr)"/>
+<text x="445" y="452" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="middle">ok / collision</text>
+<polyline points="375,510 515,510" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="445" y="495" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="middle">ExecuteTrajectory</text>
+<text x="445" y="509" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="middle">(timed joint path)</text>
+<rect x="870" y="120" width="300" height="580" rx="10" fill="none" stroke="#9ca3af" stroke-width="1.3" stroke-dasharray="6 5"/>
+<text x="882" y="140" font-size="12.5" font-weight="700" fill="#4b5563" text-anchor="start">execution backend  (one of two)</text>
+<rect x="885" y="300" width="270" height="80" rx="7" fill="#f3f4f6" stroke="#4b5563" stroke-width="1.3"/>
+<text x="897" y="322" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">mock hardware</text>
+<text x="897" y="342" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">ros2_control mock, no arm needed</text>
+<text x="897" y="359" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">tracks the plan to &lt; 1 mm</text>
+<rect x="885" y="440" width="270" height="110" rx="7" fill="#fff7ed" stroke="#c2410c" stroke-width="2.2"/>
+<text x="897" y="462" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">so101_hardware_bridge</text>
+<text x="897" y="482" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">goal := present position, then torque on</text>
+<text x="897" y="499" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">waypoints → Goal_Position, 1 Mbaud serial</text>
+<text x="897" y="516" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">dry_run:=True by default</text>
+<rect x="885" y="600" width="270" height="80" rx="7" fill="#fff7ed" stroke="#c2410c" stroke-width="2.2"/>
+<text x="897" y="622" font-size="13.5" font-weight="700" fill="#111827" text-anchor="start">Feetech STS3215 × 6</text>
+<text x="897" y="642" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">the real arm — and the real cylinder</text>
+<text x="897" y="659" font-size="12" font-weight="400" fill="#4b5563" text-anchor="start">gravity sags joints 2–3</text>
+<polyline points="745,510 790,510 790,340 885,340" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arr)"/>
+<polyline points="790,495 885,495" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="798" y="415" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="start">FollowJoint-</text>
+<text x="798" y="429" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="start">Trajectory</text>
+<polyline points="960,550 960,600" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="968" y="580" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="start">Goal_Position</text>
+<polyline points="1060,600 1060,550" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="1068" y="580" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="start">Present_Position</text>
+<polyline points="1020,680 1020,742 210,742 210,650" fill="none" stroke="#c2410c" stroke-width="2" marker-end="url(#arrA)"/>
+<text x="232" y="694" font-size="12" font-weight="700" fill="#c2410c" text-anchor="start">/joint_states — measured, not planned (both backends publish it). Every hop re-plans from it.</text>
+<text x="232" y="712" font-size="12" font-weight="400" fill="#c2410c" text-anchor="start">Real arm: the tip lands 1–5 cm off target, about the size of the 3 cm safety pad,</text>
+<text x="232" y="728" font-size="12" font-weight="400" fill="#c2410c" text-anchor="start">so a hop that ends inside the pad is refused and the loop stops.</text>
+</svg>

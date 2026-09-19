@@ -1,0 +1,11 @@
+# Default ik_loop.py loop around the cylinder: left side -> over the top -> right side -> back.
+# `rel: [dx, dy, z]` = offset (m) from the cylinder centre in the base frame (+x is the arm's
+# left, -y is forward), plus absolute gripper-origin height z. The loop therefore follows
+# --object-xy. Use `xyz: [x, y, z]` instead for an absolute point.
+# Sides are ~17 cm from the centre (padded radius 10 cm), shifted toward the base to stay in reach:
+# the real arm sags ~3 cm under load, and 13 cm sides left no margin for that. The top point must be
+# at or above the arch height (padded top 21 cm + --clearance); run with --clearance 0.07 -> 0.28.
+points:
+  - {name: left_side,  rel: [ 0.14, 0.10, 0.12]}
+  - {name: top,        rel: [ 0.00, 0.00, 0.30]}
+  - {name: right_side, rel: [-0.14, 0.10, 0.12]}

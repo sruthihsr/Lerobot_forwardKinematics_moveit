@@ -1,0 +1,13 @@
+# Gripper-frame origin positions (metres, base frame) that ik_loop.py cycles through, in order,
+# returning to the first after the last. Edit freely; unreachable / in-collision points are
+# reported by the pre-flight check and skipped.
+# The cylinder (placeholder centre 0.0, -0.22) sits between the left_* and right_* points, so
+# hops across it arch over the top automatically.
+points:
+  - {name: right_low,      xyz: [ 0.22, -0.22, 0.06]}
+  - {name: right_mid,      xyz: [ 0.20, -0.18, 0.12]}
+  - {name: above_cylinder, xyz: [ 0.00, -0.22, 0.30]}
+  - {name: left_mid,       xyz: [-0.20, -0.18, 0.12]}
+  - {name: left_low,       xyz: [-0.22, -0.22, 0.06]}
+  - {name: near_left,      xyz: [-0.15, -0.10, 0.12]}
+  - {name: near_right,     xyz: [ 0.15, -0.10, 0.12]}

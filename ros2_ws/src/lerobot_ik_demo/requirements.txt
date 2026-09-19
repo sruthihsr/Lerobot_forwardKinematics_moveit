@@ -1,0 +1,33 @@
+# lerobot_ik_demo -- dependencies
+#
+# Install the Python part with the SYSTEM interpreter ROS Jazzy uses (Python 3.12), not a conda env:
+#     /usr/bin/python3 -m pip install -r requirements.txt
+# (rclpy's compiled extension is ABI-locked to 3.12; a conda "base" python first on PATH breaks it.
+#  run.sh puts /usr/bin first for you.)
+
+# --- runtime (always) --------------------------------------------------------------------------
+numpy>=1.24          # kinematics / path maths (scripts/so101_kin.py)
+PyYAML>=6.0          # config/loop_points.yaml
+
+# --- real arm only -----------------------------------------------------------------------------
+feetech-servo-sdk>=1.0.0   # provides `scservo_sdk`, used by lerobot_hardware/scripts/feetech_bus.py
+
+# --- tests -------------------------------------------------------------------------------------
+pytest>=7.0          # /usr/bin/python3 -m pytest test/ -q   (needs the workspace sourced, for xacro + URDF)
+
+# =================================================================================================
+# NOT pip-installable -- ROS 2 Jazzy (Ubuntu 24.04) packages. Install with apt / rosdep:
+#
+#   ros-jazzy-desktop
+#   ros-jazzy-moveit                    (move_group, planning scene, /check_state_validity, RViz plugins)
+#   ros-jazzy-moveit-configs-utils
+#   ros-jazzy-tf2-geometry-msgs, ros-jazzy-tf2-ros-py     (click_to_move.py)
+#   ros-jazzy-xacro
+#   ros-jazzy-ros2-control, ros-jazzy-ros2-controllers    (mock hardware + joint_trajectory_controller)
+#   ros-jazzy-joint-state-publisher, ros-jazzy-robot-state-publisher
+#   ros-jazzy-ros-gz-sim, ros-jazzy-ros-gz-bridge, ros-jazzy-gz-ros2-control   (Gazebo demo only)
+#
+#   or, from the workspace root:   rosdep install --from-paths src --ignore-src -r -y
+#
+# Sibling packages in this workspace (must be built first): lerobot_description, lerobot_controller,
+# lerobot_moveit, lerobot_hardware.
