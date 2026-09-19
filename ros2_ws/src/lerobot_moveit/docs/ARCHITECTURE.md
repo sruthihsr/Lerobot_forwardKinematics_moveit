@@ -17,12 +17,12 @@ real Feetech servos — through one standard interface (`FollowJointTrajectory`)
 
 ## 2. Component view
 
-![lerobot_moveit architecture](architecture.svg)
+![lerobot_moveit architecture](architecture.png)
 
 *Inputs (left) become `move_group`'s parameters through `MoveItConfigsBuilder`. Clients (top) talk to
 `move_group` only. `move_group` reaches the arm only through `FollowJointTrajectory`, so mock hardware, Gazebo
 and the real bridge are interchangeable; `/joint_states` flows back into the planning scene monitor.
-(PNG copy: [architecture.png](architecture.png).)*
+(Vector version: [architecture.svg](architecture.svg).)*
 
 ## 3. Launch composition — what starts in each mode
 

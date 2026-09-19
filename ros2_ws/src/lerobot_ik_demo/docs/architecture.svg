@@ -67,8 +67,8 @@
 <polyline points="515,438 375,438" fill="none" stroke="#4b5563" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arr)"/>
 <text x="445" y="452" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="middle">ok / collision</text>
 <polyline points="375,510 515,510" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arr)"/>
-<text x="445" y="495" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="middle">ExecuteTrajectory</text>
-<text x="445" y="509" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="middle">(timed joint path)</text>
+<text x="445" y="482" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="middle">ExecuteTrajectory</text>
+<text x="445" y="496" font-size="11.5" font-weight="400" fill="#4b5563" text-anchor="middle">(timed joint path)</text>
 <rect x="870" y="120" width="300" height="580" rx="10" fill="none" stroke="#9ca3af" stroke-width="1.3" stroke-dasharray="6 5"/>
 <text x="882" y="140" font-size="12.5" font-weight="700" fill="#4b5563" text-anchor="start">execution backend  (one of two)</text>
 <rect x="885" y="300" width="270" height="80" rx="7" fill="#f3f4f6" stroke="#4b5563" stroke-width="1.3"/>

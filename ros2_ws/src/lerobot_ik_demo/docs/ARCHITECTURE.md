@@ -16,12 +16,12 @@ How `lerobot_ik_demo` moves the SO-101's gripper in a loop *around and over* a c
 
 ## 2. Component view
 
-![Architecture: one planner, two interchangeable arms](architecture.svg)
+![Architecture: one planner, two interchangeable arms](architecture.png)
 
 *The loop only ever talks to `move_group`. Mock hardware and the real Feetech bridge sit behind the same
 `FollowJointTrajectory` interface, so the identical code runs on both. The orange return path is what makes
 sim-to-real different: the real arm comes back sagged, every hop re-plans from that measured state, and the
-3 cm safety pad is the same size as the error. (PNG copy: [architecture.png](architecture.png).)*
+3 cm safety pad is the same size as the error. (Vector version: [architecture.svg](architecture.svg).)*
 
 **Packages** (all in this workspace):
 

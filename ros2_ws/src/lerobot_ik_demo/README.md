@@ -10,7 +10,7 @@ and on the **real Feetech-servo arm** — sim to real.
    (≈17 cm from the cylinder's centre, 12 cm high)    (30 cm high)
 ```
 
-![Architecture: one planner, two interchangeable arms](docs/architecture.svg)
+![Architecture: one planner, two interchangeable arms](docs/architecture.png)
 
 *The loop talks only to `move_group`; mock hardware and the real arm are interchangeable behind it. Details: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).*
 

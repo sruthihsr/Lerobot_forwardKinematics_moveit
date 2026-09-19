@@ -56,12 +56,16 @@ Package-level docs:
 same `FollowJointTrajectory` interface, so the identical code runs on both. The orange path is what makes sim-to-real
 different: the real arm comes back sagged, every hop re-plans from the measured state.
 
-![System architecture: one planner, two interchangeable arms](ros2_ws/src/lerobot_ik_demo/docs/architecture.svg)
+![System architecture: one planner, two interchangeable arms](ros2_ws/src/lerobot_ik_demo/docs/architecture.png)
+
+*(vector version: [architecture.svg](ros2_ws/src/lerobot_ik_demo/docs/architecture.svg))*
 
 **MoveIt layer.** Files in (URDF, SRDF, kinematics, limits, controllers) → `move_group` → clients (RViz, scripts) →
 one `FollowJointTrajectory` interface to any backend.
 
-![lerobot_moveit architecture](ros2_ws/src/lerobot_moveit/docs/architecture.svg)
+![lerobot_moveit architecture](ros2_ws/src/lerobot_moveit/docs/architecture.png)
+
+*(vector version: [architecture.svg](ros2_ws/src/lerobot_moveit/docs/architecture.svg))*
 
 | Package | Role | Docs |
 |---|---|---|

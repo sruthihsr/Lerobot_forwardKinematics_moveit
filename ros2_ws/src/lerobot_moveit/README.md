@@ -5,7 +5,7 @@ MoveIt 2 configuration and launch for the **SO-101** arm (5 joints + gripper, RO
 **real Feetech-servo arm** through `lerobot_hardware`. MoveIt is configured once; only a launch argument changes
 which arm it drives.
 
-![lerobot_moveit architecture](docs/architecture.svg)
+![lerobot_moveit architecture](docs/architecture.png)
 
 *Inputs → `move_group` → one `FollowJointTrajectory` interface → any backend. Full description:
 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).*
