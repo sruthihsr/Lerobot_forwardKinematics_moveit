@@ -40,12 +40,17 @@ Counting: 3 position + 1 pitch = 4 constraints, 4 unknowns (q1…q4), so solutio
 With the arm in its vertical plane (coordinates **ρ** = forward from the pan axis, **z** = up), and
 `R(t)` = 2-D rotation by **−t** (a positive joint angle turns the plane clockwise):
 
-```
-P(ρ, z) = p₂ + R(q2)·a + R(q2+q3)·b + R(q2+q3+q4)·c                       (1)
+$$
+\begin{pmatrix}\rho\\ z\end{pmatrix}
+= \mathbf{p}_2 + R(q_2)\,\mathbf{a} + R(q_2+q_3)\,\mathbf{b} + R(q_2+q_3+q_4)\,\mathbf{c}
+\qquad (1)
+$$
 
-x = pan_x − ρ·sin q1 + λ·cos q1
-y = pan_y − ρ·cos q1 − λ·sin q1                                            (2)
-```
+$$
+x = p_x - \rho\sin q_1 + \lambda\cos q_1,\qquad
+y = p_y - \rho\cos q_1 - \lambda\sin q_1
+\qquad (2)
+$$
 
 | constant | value (from the URDF) |
 |---|---|
@@ -62,9 +67,11 @@ y = pan_y − ρ·cos q1 − λ·sin q1                                         
 orthonormal pair **f** = (−sin q1, −cos q1) (forward) and **l** = (cos q1, −sin q1). Taking the **l** component,
 `λ = d·l = |d|·cos(q1 + α)` with `α = atan2(d_y, d_x)`, hence
 
-```
-q1 = −α ± arccos(λ / |d|),        ρ = d·f = −sin q1·d_x − cos q1·d_y
-```
+$$
+\boxed{\;q_1 = -\alpha \pm \arccos\frac{\lambda}{\lVert\mathbf d\rVert}\;},\qquad
+\rho = \mathbf d\cdot\mathbf f = -\sin q_1\, d_x - \cos q_1\, d_y,\qquad
+\alpha=\operatorname{atan2}(d_y,d_x)
+$$
 
 Two pan solutions: the **forward** one (ρ > 0, the arm reaches out in front) and a **behind** one
 (ρ < 0, the arm reaches back over its own pan axis; q1 ≈ ±π away). Because |λ| ≈ 0.18 mm ≪ |d|,
@@ -74,28 +81,33 @@ the forward solution is `q1 ≈ −atan2(d_x, −d_y)`, in error by at most abou
 **Step 2 — wrist point.** Only `c` depends on q4 and the pitch, so subtract it (with `φ` known) to get the point that
 joints 2 and 3 alone must reach:
 
-```
-W = (ρ, z) − p₂ − R(φ)·c  =  R(q2)·a + R(q2+q3)·b
-```
+$$
+\boxed{\;\mathbf W = (\rho, z) - \mathbf p_2 - R(\varphi)\,\mathbf c\;}
+\;=\; R(q_2)\,\mathbf a + R(q_2+q_3)\,\mathbf b
+$$
 
 **Step 3 — elbow (q3), by the law of cosines.** Factor out `R(q2)`: `W = R(q2)·[ a + R(q3)·b ]`; rotating doesn't
 change length, so `|W|² = |a + R(q3)·b|² = |a|² + |b|² + 2|a||b|·cos(∠b − ∠a − q3)`, where `∠a` = 76.032° and
 `∠b` = 2.207° are the directions of **a** and **b**. Solving,
 
-```
-cos θ = ( |W|² − |a|² − |b|² ) / ( 2|a||b| ) ,         q3 = (∠b − ∠a) ∓ arccos(cos θ)  =  −73.825° ∓ θ
-```
+$$
+\boxed{\;\cos\theta = \frac{\lVert\mathbf W\rVert^{2} - \lVert\mathbf a\rVert^{2} - \lVert\mathbf b\rVert^{2}}{2\,\lVert\mathbf a\rVert\,\lVert\mathbf b\rVert}\;},
+\qquad
+q_3 = (\angle\mathbf b - \angle\mathbf a) \mp \arccos(\cos\theta) = -73.825^\circ \mp \theta
+$$
 
 The ∓ gives the **two elbow branches** (A: elbow folded far the other way, B: the usual pose).
-**Reachable only if |cos θ| ≤ 1**, i.e. `0.019 m = | |a|−|b| | ≤ |W| ≤ |a|+|b| = 0.251 m`.
+**Reachable only if $\lvert\cos\theta\rvert \le 1$**, i.e. $0.019\,\text{m} = \big\lvert \lVert\mathbf a\rVert - \lVert\mathbf b\rVert \big\rvert \;\le\; \lVert\mathbf W\rVert \;\le\; \lVert\mathbf a\rVert + \lVert\mathbf b\rVert = 0.251\,\text{m}$.
 
 **Step 4 — shoulder (q2).** With q3 known, `v = a + R(q3)·b` is a fixed vector and `W = R(q2)·v`, so
 
-```
-q2 = angle(v) − angle(W)            (angle(·) = atan2(vertical, ρ))
-```
+$$
+\boxed{\;q_2 = \angle\!\left(\mathbf a + R(q_3)\,\mathbf b\right) - \angle\mathbf W\;},
+\qquad
+\angle(\cdot) = \operatorname{atan2}(\text{vertical},\,\rho)
+$$
 
-**Step 5 — wrist pitch (q4).**  `q4 = φ − q2 − q3`.
+**Step 5 — wrist pitch (q4).**  $\boxed{\,q_4 = \varphi - q_2 - q_3\,}$
 
 **Step 6 — wrist roll (q5)** is unconstrained.
 

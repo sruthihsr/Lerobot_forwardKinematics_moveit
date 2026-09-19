@@ -38,14 +38,17 @@ python3 docs/fk_calc.py --moveit              # compare against a running move_g
 
 Each joint contributes one homogeneous transform: its fixed origin, then the rotation about its own z:
 
-```
-T_origin,i = | R(rpy_i)   xyz_i |          Rz(q) = | cos q  −sin q  0  0 |
-             |   0 0 0      1   |                  | sin q   cos q  0  0 |
-                                                    |   0       0    1  0 |
-                                                    |   0       0    0  1 |
+$$
+T_{\text{origin},i}=\begin{bmatrix} R(\text{rpy}_i) & \mathbf{p}_i \\ \mathbf{0}^{\top} & 1 \end{bmatrix},
+\qquad
+R_z(q)=\begin{bmatrix}\cos q & -\sin q & 0 & 0\\ \sin q & \cos q & 0 & 0\\ 0 & 0 & 1 & 0\\ 0 & 0 & 0 & 1\end{bmatrix}
+$$
 
-T_i = T_(i−1) · T_origin,i · Rz(q_i)        T_0 = I        (i = 1 … 6)
-```
+$$
+\boxed{\,T_i \;=\; T_{i-1}\; T_{\text{origin},i}\; R_z(q_i)\,},\qquad T_0=I,\quad i=1\ldots 6
+$$
+
+where $\mathbf{p}_i$ is the joint's `xyz` and $R(\text{rpy}) = R_z(\text{yaw})\,R_y(\text{pitch})\,R_x(\text{roll})$.
 
 `T_i` is the pose of link *i*'s frame in `base`; its last column is the link origin, its top-left 3×3 the
 orientation. The **gripper link** (the tip frame of the `arm` group, and the point the
@@ -121,15 +124,24 @@ through base-frame (0.02079, −0.02307). Constants, all read off the URDF at `q
 | **c** | (+0.06110, 0), \|c\| = **0.06110** m | joint 4 → gripper origin |
 | **λ** | −0.176 mm | the plane sits this far beside the pan axis (a URDF construction detail) |
 
-A positive joint angle turns the (ρ, z) plane clockwise, so with `R(t)` = the 2-D rotation matrix by **−t**:
+A positive joint angle turns the (ρ, z) plane clockwise, so $R(t)$ is the 2-D rotation matrix by $-t$:
 
-```
-(1) plane   P(ρ, z) = p₂ + R(q2)·a + R(q2+q3)·b + R(q2+q3+q4)·c
+$$
+\begin{pmatrix}\rho\\ z\end{pmatrix}
+= \mathbf{p}_2 + R(q_2)\,\mathbf{a} + R(q_2+q_3)\,\mathbf{b} + R(q_2+q_3+q_4)\,\mathbf{c}
+\qquad (1)
+$$
 
-(2) pan     x = pan_x − ρ·sin q1 + λ·cos q1
-            y = pan_y − ρ·cos q1 − λ·sin q1
-            z = z
-```
+$$
+\begin{aligned}
+x &= p_x - \rho\,\sin q_1 + \lambda\,\cos q_1\\
+y &= p_y - \rho\,\cos q_1 - \lambda\,\sin q_1\\
+z &= z
+\end{aligned}
+\qquad (2)
+$$
+
+with $R(t)=\begin{bmatrix}\cos t & \sin t\\ -\sin t & \cos t\end{bmatrix}$ (rotation by $-t$) and $(p_x,p_y)$ the pan axis.
 
 `q5` (wrist roll) and `q6` (jaw) do not appear: the gripper origin lies on the roll axis.
 Over 200 random poses (q1…q4 across their full limits) this agrees with the full 4×4 chain to
